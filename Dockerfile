@@ -5,7 +5,7 @@ ARG steam_password=
 ARG metamod_version=1.20
 ARG amxmod_version=1.8.2
 
-RUN apt update && apt install -y lib32gcc1 curl
+RUN apt update && apt install -y --force-yes lib32gcc1 curl
 
 # Install SteamCMD
 RUN mkdir -p /opt/steam && cd /opt/steam && \
@@ -42,6 +42,10 @@ ADD files/plugins.ini /opt/hlds/cstrike/addons/metamod/plugins.ini
 RUN mkdir -p /opt/hlds/cstrike/addons/dproto
 ADD files/dproto_i386.so /opt/hlds/cstrike/addons/dproto/dproto_i386.so
 ADD files/dproto.cfg /opt/hlds/cstrike/dproto.cfg
+
+# Install podbot
+RUN mkdir -p /opt/hlds/cstrike/addons/podbot
+ADD files/podbot/* /opt/hlds/cstrike/addons/podbot/
 
 # Install AMX mod X
 RUN curl -sqL "http://www.amxmodx.org/release/amxmodx-$amxmod_version-base-linux.tar.gz" | tar -C /opt/hlds/cstrike/ -zxvf -
